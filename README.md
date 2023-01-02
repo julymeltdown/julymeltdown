@@ -2,7 +2,9 @@
 
 - 🔭 I’m currently working on Spring Boot
 - 🌱 I’m currently learning Spring Boot
-- 📫 How to reach me: quintuplets2000@gmamil.com, https://www.instagram.com/colored_by_funeral/
+- 📫 How to reach me: quintuplets2000@gmail.com
+- 😋 [인스타그램](https://www.instagram.com/julymeltdown_/)
+- 🎓 Soongsil Univ. Software 19학번
 #
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=julymeltdown&layout=compact)](https://github.com/anuraghazra/github-readme-stats)
 #
