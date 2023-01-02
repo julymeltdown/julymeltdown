@@ -7,7 +7,6 @@
 백엔드 공부하는 이현수 입니다.<br>
 🎓숭실대학교 Software 19학번<br>
 😋 인스타그램(https://www.instagram.com/julymeltdown_/)<br>
-🌱 I’m currently learning Spring Boot
 로켓펀치: https://www.rocketpunch.com/@abbb96e89501494b
 <br>
 
