@@ -7,7 +7,6 @@
 반갑습니다👐<br>
 백엔드 공부하는 이현수 입니다.<br>
 🎓숭실대학교 Software 19학번<br>
-😋 인스타그램(https://www.instagram.com/julymeltdown_/)<br>
 <br>
 
 <p align="center">
