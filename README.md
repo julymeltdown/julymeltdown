@@ -1,4 +1,4 @@
-![Julymeltdown's Github](https://capsule-render.vercel.app/api?type=waving&height=300&text=Julymeltdown!&fontAlign=70&fontAlignY=40&color=gradient)
+![Julymeltdown's Github](https://capsule-render.vercel.app/api?type=waving&height=300&text=Julymeltdown&fontAlign=70&fontAlignY=40&color=gradient)
 
 
 #
