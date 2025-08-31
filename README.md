@@ -1,33 +1,17 @@
-![Julymeltdown's Github](https://capsule-render.vercel.app/api?type=waving&height=300&text=Julymeltdown&fontAlign=70&fontAlignY=40&color=gradient)
+### 👋 소개
+- 테스트와 협업 테스트로 신뢰할 수 있는 코드를 만드는 것을 목표로합니다
+- AI 헤비 과금러로서 토이 프로젝트에 AI를 개발 프로세스에 접목, 작은 배포와 빠른 피드백을 지향합니다.
 
+---
 
-#
-<div align="center">  
-<p align="center">
-👐반갑습니다👐<br>
-이현수 입니다.<br>
-🎓숭실대학교 Software 19학번<br>
-<br>
-
-<p align="center">
-    <Strong>⚒️Tech Stack⚒️</Strong><br>
-    메인스택
-</p>
-<p align="center" display="inline-block">
-    <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=SpringBoot&logoColor=white"> 
-    <img src="https://img.shields.io/badge/Kotlin-0095D5?&style=for-the-badge&logo=kotlin&logoColor=white">
-</p><br>
-</p>
-
-<p align="center">
-    <Strong>⚒️Tech Stack⚒️</Strong><br>
-    써본 적 있음
-</p>
-<p align="center" display="inline-block">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white">
-  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white"> 
-</p>
-
-# :mailbox_with_mail: Contacts
-[![Gmail Badge](https://img.shields.io/badge/Gmail-d14836?style=flat-square&logo=Gmail&logoColor=white&link=mailto:quintuplets2000@gmail.com)](mailto:quintuplets2000@gmail.com)
+### 📊 GitHub Stats
+<div align="center">
+  <img height="150" src="https://streak-stats.demolab.com?user=Julymeltdown&theme=transparent&hide_border=true" />
+  <br/><br/>
+  <img src="https://komarev.com/ghpvc/?username=Julymeltdown&label=Profile%20Views&color=0e75b6&style=flat" />
 </div>
+
+---
+
+### :mailbox_with_mail: Contacts
+[![Gmail Badge](https://img.shields.io/badge/Gmail-d14836?style=flat-square&logo=Gmail&logoColor=white&link=mailto:quintuplets2000@gmail.com)](mailto:quintuplets2000@gmail.com)
