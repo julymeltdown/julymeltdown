@@ -4,7 +4,9 @@ use serde::Serialize;
 use serde_json::{json, Map, Value};
 use sha2::{Digest, Sha256};
 
-use crate::{ArtifactRef, CheckResult, RepositoryRevision, VerificationRequest, VerificationResult};
+use crate::{
+    ArtifactRef, CheckResult, RepositoryRevision, VerificationRequest, VerificationResult,
+};
 
 /// Errors raised while constructing deterministic protocol fingerprints.
 #[derive(Debug, thiserror::Error)]
@@ -45,7 +47,10 @@ fn write_value(value: &Value, output: &mut Vec<u8>) -> Result<(), ProtocolDigest
     Ok(())
 }
 
-fn write_object(values: &Map<String, Value>, output: &mut Vec<u8>) -> Result<(), ProtocolDigestError> {
+fn write_object(
+    values: &Map<String, Value>,
+    output: &mut Vec<u8>,
+) -> Result<(), ProtocolDigestError> {
     output.push(b'{');
     let mut keys = values.keys().collect::<Vec<_>>();
     keys.sort_unstable();
@@ -90,7 +95,9 @@ pub fn request_digest(request: &VerificationRequest) -> Result<String, ProtocolD
 }
 
 /// Computes an exact repository set fingerprint independent of input ordering.
-pub fn commit_set_digest(repositories: &[RepositoryRevision]) -> Result<String, ProtocolDigestError> {
+pub fn commit_set_digest(
+    repositories: &[RepositoryRevision],
+) -> Result<String, ProtocolDigestError> {
     let mut material = repositories
         .iter()
         .map(|repository| {
@@ -129,7 +136,9 @@ pub fn environment_digest(
 }
 
 /// Computes a deterministic semantic result fingerprint.
-pub fn normalized_result_digest(result: &VerificationResult) -> Result<String, ProtocolDigestError> {
+pub fn normalized_result_digest(
+    result: &VerificationResult,
+) -> Result<String, ProtocolDigestError> {
     let mut repositories = result.repositories.clone();
     repositories.sort_by(|left, right| left.repository_id.cmp(&right.repository_id));
     for repository in &mut repositories {
@@ -159,7 +168,9 @@ pub fn normalized_result_digest(result: &VerificationResult) -> Result<String, P
 
 fn normalize_checks(checks: &mut [CheckResult]) {
     for check in checks.iter_mut() {
-        check.assertions.sort_by(|left, right| left.key.cmp(&right.key));
+        check
+            .assertions
+            .sort_by(|left, right| left.key.cmp(&right.key));
     }
     checks.sort_by(|left, right| left.id.cmp(&right.id));
 }

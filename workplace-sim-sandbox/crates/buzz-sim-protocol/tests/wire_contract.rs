@@ -1,9 +1,8 @@
 use buzz_sim_protocol::{
-    canonical_json_bytes, commit_set_digest, normalized_result_digest, request_digest,
-    AssertionResult, ArtifactRef, CheckPhase, CheckResult, EnvironmentEvidence,
-    EvidenceVisibility, FailureSummary, FinalStatus, RepositoryRevision, RunState,
-    VerificationAccepted, VerificationRequest, VerificationResult, VerifiedRepository,
-    VERIFICATION_PROTOCOL_VERSION,
+    canonical_json_bytes, commit_set_digest, normalized_result_digest, request_digest, ArtifactRef,
+    AssertionResult, CheckPhase, CheckResult, EnvironmentEvidence, EvidenceVisibility,
+    FailureSummary, FinalStatus, RepositoryRevision, RunState, VerificationAccepted,
+    VerificationRequest, VerificationResult, VerifiedRepository, VERIFICATION_PROTOCOL_VERSION,
 };
 use chrono::{TimeZone, Utc};
 use serde_json::json;
@@ -222,7 +221,10 @@ fn request_digest_ignores_run_id_but_commit_set_is_order_independent() {
     let first = request();
     let mut second = first.clone();
     second.run_id = Uuid::new_v4();
-    assert_eq!(request_digest(&first).unwrap(), request_digest(&second).unwrap());
+    assert_eq!(
+        request_digest(&first).unwrap(),
+        request_digest(&second).unwrap()
+    );
 
     let mut reversed = first.repositories.clone();
     reversed.reverse();
