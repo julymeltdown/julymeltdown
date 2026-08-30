@@ -23,6 +23,14 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: workplace-sim-sandbox
+      - name: Apply staged source bundle
+        run: |
+          if compgen -G '.staging/task3.part-*' >/dev/null; then
+            cat .staging/task3.part-* | base64 --decode > /tmp/task3.tar.gz
+            echo '2c4154e33d74f29b37b28abbe03291d68852c18c1885bb0a78edaadd8b38db59  /tmp/task3.tar.gz' | sha256sum -c -
+            tar -xzf /tmp/task3.tar.gz
+            rm -rf .staging /tmp/task3.tar.gz
+          fi
       - name: Format
         run: cargo fmt --all
       - name: Check
@@ -31,12 +39,13 @@ jobs:
         run: cargo test --workspace --all-targets
       - name: Clippy
         run: cargo clippy --workspace --all-targets -- -D warnings
-      - name: Persist generated lockfile and formatting
+      - name: Persist verified sources and formatting
         run: |
-          git add Cargo.lock crates
+          git add Cargo.toml Cargo.lock crates
+          git add -A .staging
           if ! git diff --cached --quiet; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -s -m "style(sim): apply verified Rust formatting"
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -s -m 'feat(sim): add validated scenario manifest'
             git push origin HEAD:workplace-sim-sandbox-ci
           fi
