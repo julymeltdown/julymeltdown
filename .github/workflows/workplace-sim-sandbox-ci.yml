@@ -2,11 +2,13 @@ name: Workplace Sim Sandbox CI
 
 on:
   push:
-    branches: [workplace-sim-sandbox-ci]
+    branches:
+      - workplace-sim-sandbox-ci
+      - workplace-sim-npc-execution
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   rust:
@@ -24,7 +26,7 @@ jobs:
         with:
           workspaces: workplace-sim-sandbox
       - name: Format
-        run: cargo fmt --all
+        run: cargo fmt --all -- --check
       - name: Check
         run: cargo check --workspace --all-targets
       - name: Test
@@ -33,12 +35,3 @@ jobs:
         run: cargo clippy --workspace --all-targets -- -D warnings
       - name: Diff hygiene
         run: git diff --check
-      - name: Persist verified lockfile and formatting
-        run: |
-          git add Cargo.toml Cargo.lock crates
-          if ! git diff --cached --quiet; then
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -s -m 'style(sim): persist verified GitHub provisioning sources'
-            git push origin HEAD:workplace-sim-sandbox-ci
-          fi

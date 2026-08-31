@@ -4,6 +4,7 @@ members = [
     "crates/buzz-sandbox-runner",
     "crates/buzz-sim-github",
     "crates/buzz-sim-agent",
+    "crates/buzz-sim-executor",
 ]
 resolver = "2"
 
@@ -42,3 +43,4 @@ uuid = { version = "1", features = ["v4", "serde"] }
 buzz-sim-protocol = { path = "crates/buzz-sim-protocol" }
 buzz-sim-github = { path = "crates/buzz-sim-github" }
 buzz-sim-agent = { path = "crates/buzz-sim-agent" }
+buzz-sim-executor = { path = "crates/buzz-sim-executor" }

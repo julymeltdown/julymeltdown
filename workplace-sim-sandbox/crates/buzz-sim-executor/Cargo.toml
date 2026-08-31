@@ -1,0 +1,20 @@
+[package]
+name = "buzz-sim-executor"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Idempotent action execution bridge for Buzz workplace simulator NPCs"
+
+[dependencies]
+async-trait = { workspace = true }
+buzz-sim-agent = { workspace = true }
+buzz-sim-github = { workspace = true }
+buzz-sim-protocol = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+uuid = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true }
