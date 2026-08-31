@@ -13,6 +13,8 @@ mod memory;
 mod orchestrator;
 mod persona;
 
+pub(crate) use persona::{validate_id, validate_nonempty};
+
 pub use action::{ActionPolicy, NpcActionDraft, NpcReplyDraft, PolicyViolation};
 pub use context::{
     ConversationSurface, NpcContextBuilder, NpcModelInput, NpcTurnRequest, WorldSnapshot,
