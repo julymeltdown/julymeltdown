@@ -76,7 +76,7 @@ async fn structured_model_forwards_exact_context_and_parses_strict_json() {
     let requests = Arc::new(Mutex::new(Vec::new()));
     let transport = CapturingTransport {
         requests: requests.clone(),
-        response: br#"{
+        response: r#"{
           "reply": {
             "body": "모바일 앱이 v1을 사용합니다. 계약부터 확인하죠.",
             "fact_ids": ["mobile_v1"]
@@ -84,6 +84,7 @@ async fn structured_model_forwards_exact_context_and_parses_strict_json() {
           "actions": [],
           "memory_note": null
         }"#
+        .as_bytes()
         .to_vec(),
     };
     let model = JsonNpcModel::new(transport);
@@ -145,5 +146,5 @@ async fn oversized_model_output_is_rejected_before_parsing() {
 
     let error = model.generate(&input()).await.unwrap_err();
 
-    assert!(matches!(AgentError::Model(message) if message.contains("1025") && message.contains("1024")));
+    assert!(matches!(error, AgentError::Model(message) if message.contains("1025") && message.contains("1024")));
 }
