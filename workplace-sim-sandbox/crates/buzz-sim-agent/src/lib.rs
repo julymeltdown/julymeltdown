@@ -8,6 +8,7 @@
 
 mod action;
 mod context;
+mod dispatch;
 mod error;
 mod memory;
 mod model;
@@ -19,6 +20,11 @@ pub(crate) use persona::{validate_id, validate_nonempty};
 pub use action::{ActionPolicy, NpcActionDraft, NpcReplyDraft, PolicyViolation};
 pub use context::{
     ConversationSurface, NpcContextBuilder, NpcModelInput, NpcTurnRequest, WorldSnapshot,
+};
+pub use dispatch::{
+    NpcActionCommand, NpcActionDispatchLedger, NpcActionDispatchResult, NpcActionDispatcher,
+    NpcActionExecutor, NpcActionExecutorError, NpcActionReceipt, NpcActionReceiptStatus,
+    NpcDispatchError,
 };
 pub use error::AgentError;
 pub use memory::{MemoryAudience, MemoryLedger, MemoryRecord, MemoryRecordOutcome};
