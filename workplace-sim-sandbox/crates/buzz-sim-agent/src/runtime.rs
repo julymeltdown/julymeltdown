@@ -190,10 +190,7 @@ where
                 });
             }
 
-            let turn = self
-                .orchestrator
-                .orchestrate(request, memory_limit)
-                .await?;
+            let turn = self.orchestrator.orchestrate(request, memory_limit).await?;
             if let Some(note) = &turn.memory_note {
                 if note.len() > MAX_MEMORY_NOTE_BYTES {
                     return Err(NpcRuntimeError::MemoryNoteTooLong {
@@ -345,8 +342,8 @@ fn runtime_request_digest(
         "memory_limit": memory_limit,
         "memory_sequence": memory_sequence,
     });
-    let bytes = canonical_json_bytes(&value)
-        .map_err(|error| AgentError::Digest(error.to_string()))?;
+    let bytes =
+        canonical_json_bytes(&value).map_err(|error| AgentError::Digest(error.to_string()))?;
     Ok(sha256_hex(&bytes))
 }
 

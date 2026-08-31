@@ -166,7 +166,10 @@ async fn changed_input_with_the_same_turn_id_is_rejected_before_model_or_executo
     };
     let (mut runtime, model_calls, executor_calls) = runtime(10, output, None);
 
-    runtime.run_turn(&request("원래 요청"), 16, 1).await.unwrap();
+    runtime
+        .run_turn(&request("원래 요청"), 16, 1)
+        .await
+        .unwrap();
     let error = runtime
         .run_turn(&request("변조된 요청"), 16, 1)
         .await
@@ -230,7 +233,8 @@ async fn action_batch_over_budget_is_rejected_before_any_side_effect() {
 }
 
 #[tokio::test]
-async fn partial_failure_charges_only_the_completed_prefix_and_retry_finishes_without_regeneration() {
+async fn partial_failure_charges_only_the_completed_prefix_and_retry_finishes_without_regeneration()
+{
     let output = NpcModelOutput {
         reply: None,
         actions: vec![message("하나"), message("둘"), message("셋")],
