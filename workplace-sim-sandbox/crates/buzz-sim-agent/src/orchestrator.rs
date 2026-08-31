@@ -93,6 +93,15 @@ impl<M> NpcOrchestrator<M> {
     pub const fn memories(&self) -> &MemoryLedger {
         &self.memories
     }
+
+    /// Returns the mutable authoritative memory projection to the turn runtime.
+    ///
+    /// Model backends never receive this handle; only deterministic post-dispatch logic should
+    /// record memories through it.
+    #[must_use]
+    pub fn memories_mut(&mut self) -> &mut MemoryLedger {
+        &mut self.memories
+    }
 }
 
 impl<M> NpcOrchestrator<M>
