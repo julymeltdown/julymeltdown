@@ -28,8 +28,9 @@ impl MemoryAudience {
         match self {
             Self::ActorOnly { actor_id } => validate_id(actor_id)
                 .map_err(|reason| AgentError::InvalidMemory(reason.to_string())),
-            Self::Team { team_id } => validate_id(team_id)
-                .map_err(|reason| AgentError::InvalidMemory(reason.to_string())),
+            Self::Team { team_id } => {
+                validate_id(team_id).map_err(|reason| AgentError::InvalidMemory(reason.to_string()))
+            }
             Self::Public => Ok(()),
         }
     }
@@ -90,11 +91,9 @@ impl MemoryRecord {
         validate_id(&record.actor_id)
             .map_err(|reason| AgentError::InvalidMemory(reason.to_string()))?;
         record.audience.validate()?;
-        validate_nonempty("memory summary", &record.summary)
-            .map_err(AgentError::InvalidMemory)?;
+        validate_nonempty("memory summary", &record.summary).map_err(AgentError::InvalidMemory)?;
         for fact_id in &record.related_fact_ids {
-            validate_id(fact_id)
-                .map_err(|reason| AgentError::InvalidMemory(reason.to_string()))?;
+            validate_id(fact_id).map_err(|reason| AgentError::InvalidMemory(reason.to_string()))?;
         }
         Ok(record)
     }
@@ -140,9 +139,7 @@ impl MemoryLedger {
         let mut visible = self
             .records
             .values()
-            .filter(|record| {
-                record.session_id == session_id && record.audience.visible_to(persona)
-            })
+            .filter(|record| record.session_id == session_id && record.audience.visible_to(persona))
             .cloned()
             .collect::<Vec<_>>();
         visible.sort_by_key(|record| (record.sequence, record.event_id));

@@ -328,13 +328,7 @@ impl<'a> ActionPolicy<'a> {
         if let ConversationSurface::Channel { channel_id } = surface {
             self.require_channel(persona, channel_id)?;
         }
-        self.validate_text_and_facts(
-            persona,
-            surface,
-            &reply.body,
-            &reply.fact_ids,
-            "reply body",
-        )
+        self.validate_text_and_facts(persona, surface, &reply.body, &reply.fact_ids, "reply body")
     }
 
     fn require_capability(
@@ -402,11 +396,12 @@ impl<'a> ActionPolicy<'a> {
     ) -> Result<(), PolicyViolation> {
         validate_text(field, body)?;
         for fact_id in fact_ids {
-            let fact = persona.knowledge_by_id(fact_id).ok_or_else(|| {
-                PolicyViolation::UnknownFact {
-                    fact_id: fact_id.clone(),
-                }
-            })?;
+            let fact =
+                persona
+                    .knowledge_by_id(fact_id)
+                    .ok_or_else(|| PolicyViolation::UnknownFact {
+                        fact_id: fact_id.clone(),
+                    })?;
             if !disclosure_allowed(fact.disclosure, surface) {
                 return Err(PolicyViolation::FactDisclosureDenied {
                     fact_id: fact_id.clone(),
@@ -446,10 +441,7 @@ impl<'a> ActionPolicy<'a> {
     }
 }
 
-fn disclosure_allowed(
-    disclosure: KnowledgeDisclosure,
-    surface: &ConversationSurface,
-) -> bool {
+fn disclosure_allowed(disclosure: KnowledgeDisclosure, surface: &ConversationSurface) -> bool {
     match (disclosure, surface) {
         (KnowledgeDisclosure::Public, _) => true,
         (KnowledgeDisclosure::Team, _) => true,
@@ -460,10 +452,7 @@ fn disclosure_allowed(
 }
 
 fn validate_text(field: &'static str, value: &str) -> Result<(), PolicyViolation> {
-    validate_nonempty(field, value).map_err(|reason| PolicyViolation::InvalidText {
-        field,
-        reason,
-    })
+    validate_nonempty(field, value).map_err(|reason| PolicyViolation::InvalidText { field, reason })
 }
 
 fn require_pull_request(value: u64) -> Result<(), PolicyViolation> {

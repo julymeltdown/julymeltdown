@@ -188,6 +188,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "buzz-sim-agent"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "buzz-sim-github",
+ "buzz-sim-protocol",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "thiserror",
+ "tokio",
+ "uuid",
+]
+
+[[package]]
 name = "buzz-sim-github"
 version = "0.1.0"
 dependencies = [

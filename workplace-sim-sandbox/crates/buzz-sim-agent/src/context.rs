@@ -73,10 +73,10 @@ pub struct NpcModelInput {
 impl NpcModelInput {
     /// Computes a stable SHA-256 over canonical JSON model input.
     pub fn digest(&self) -> Result<String, AgentError> {
-        let value = serde_json::to_value(self)
-            .map_err(|error| AgentError::Digest(error.to_string()))?;
-        let bytes = canonical_json_bytes(&value)
-            .map_err(|error| AgentError::Digest(error.to_string()))?;
+        let value =
+            serde_json::to_value(self).map_err(|error| AgentError::Digest(error.to_string()))?;
+        let bytes =
+            canonical_json_bytes(&value).map_err(|error| AgentError::Digest(error.to_string()))?;
         Ok(sha256_hex(&bytes))
     }
 }

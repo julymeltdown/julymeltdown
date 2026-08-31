@@ -118,8 +118,8 @@ where
             });
         }
 
-        let input = NpcContextBuilder::new(&self.directory, &self.memories)
-            .build(request, memory_limit)?;
+        let input =
+            NpcContextBuilder::new(&self.directory, &self.memories).build(request, memory_limit)?;
         let input_digest = input.digest()?;
         let output = self.model.generate(&input).await?;
         if output.actions.len() > MAX_ACTIONS_PER_TURN {
@@ -179,13 +179,13 @@ fn action_id(
 }
 
 fn digest_serializable<T: Serialize>(value: &T) -> Result<String, AgentError> {
-    let value = serde_json::to_value(value)
-        .map_err(|error| AgentError::Digest(error.to_string()))?;
+    let value =
+        serde_json::to_value(value).map_err(|error| AgentError::Digest(error.to_string()))?;
     digest_value(&value)
 }
 
 fn digest_value(value: &serde_json::Value) -> Result<String, AgentError> {
-    let bytes = canonical_json_bytes(value)
-        .map_err(|error| AgentError::Digest(error.to_string()))?;
+    let bytes =
+        canonical_json_bytes(value).map_err(|error| AgentError::Digest(error.to_string()))?;
     Ok(sha256_hex(&bytes))
 }

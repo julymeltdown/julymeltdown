@@ -64,10 +64,7 @@ fn valid_persona_pack_round_trips_and_preserves_work_authority() {
         Some(&RepositoryAccess::Maintain)
     );
     assert_eq!(minseo.knowledge[0].stance, KnowledgeStance::Fact);
-    assert_eq!(
-        minseo.knowledge[2].disclosure,
-        KnowledgeDisclosure::Never
-    );
+    assert_eq!(minseo.knowledge[2].disclosure, KnowledgeDisclosure::Never);
 }
 
 #[test]
@@ -80,7 +77,10 @@ fn presentation_other_than_woman_is_rejected_by_the_schema() {
 
 #[test]
 fn unknown_yaml_fields_are_rejected() {
-    let invalid = VALID_PACK.replace("    workload: 78", "    romance_route: true\n    workload: 78");
+    let invalid = VALID_PACK.replace(
+        "    workload: 78",
+        "    romance_route: true\n    workload: 78",
+    );
     let error = PersonaPack::from_yaml(&invalid).unwrap_err();
 
     assert!(error.to_string().contains("romance_route"));

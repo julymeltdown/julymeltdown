@@ -157,8 +157,7 @@ pub struct PersonaPack {
 impl PersonaPack {
     /// Parses strict YAML while rejecting unknown fields and unsupported enum values.
     pub fn from_yaml(source: &str) -> Result<Self, AgentError> {
-        serde_yaml::from_str(source)
-            .map_err(|error| AgentError::PersonaYaml(error.to_string()))
+        serde_yaml::from_str(source).map_err(|error| AgentError::PersonaYaml(error.to_string()))
     }
 }
 

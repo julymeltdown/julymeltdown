@@ -118,16 +118,22 @@ async fn free_text_is_passed_to_the_model_and_validated_actions_get_stable_ids()
     let first = orchestrator.orchestrate(&turn_request, 16).await.unwrap();
     let second = orchestrator.orchestrate(&turn_request, 16).await.unwrap();
 
-    assert_eq!(captured.lock().unwrap()[0].request.player_input, turn_request.player_input);
+    assert_eq!(
+        captured.lock().unwrap()[0].request.player_input,
+        turn_request.player_input
+    );
     assert_eq!(first.actor_id, "minseo");
     assert_eq!(first.session_id, turn_request.session_id);
     assert_eq!(first.turn_id, turn_request.turn_id);
     assert_eq!(first.actions.len(), 1);
-    assert_eq!(first.actions[0].action, NpcActionDraft::CreateBranch {
-        repository_id: "legacy-cart".to_string(),
-        branch_name: "sim/minseo/coupon-fix".to_string(),
-        purpose: "쿠폰 계산 수정".to_string(),
-    });
+    assert_eq!(
+        first.actions[0].action,
+        NpcActionDraft::CreateBranch {
+            repository_id: "legacy-cart".to_string(),
+            branch_name: "sim/minseo/coupon-fix".to_string(),
+            purpose: "쿠폰 계산 수정".to_string(),
+        }
+    );
     assert_eq!(first.input_digest, second.input_digest);
     assert_eq!(first.output_digest, second.output_digest);
     assert_eq!(first.actions[0].action_id, second.actions[0].action_id);
@@ -209,5 +215,11 @@ async fn model_output_is_bounded_to_prevent_unlimited_agent_fanout() {
         .orchestrate(&request("minseo"), 16)
         .await
         .unwrap_err();
-    assert!(matches!(error, AgentError::TooManyActions { count: 9, maximum: 8 }));
+    assert!(matches!(
+        error,
+        AgentError::TooManyActions {
+            count: 9,
+            maximum: 8
+        }
+    ));
 }
