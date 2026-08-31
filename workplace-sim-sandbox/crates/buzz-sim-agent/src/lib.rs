@@ -14,6 +14,7 @@ mod memory;
 mod model;
 mod orchestrator;
 mod persona;
+mod router;
 mod runtime;
 
 pub(crate) use persona::{validate_id, validate_nonempty};
@@ -41,4 +42,10 @@ pub use persona::{
     CharacterPresentation, KnowledgeDisclosure, KnowledgeEntry, KnowledgeStance, NpcAvailability,
     NpcCapability, NpcGoal, NpcPersona, PersonaDirectory, PersonaPack, PERSONA_PACK_VERSION,
 };
-pub use runtime::{NpcRuntimeError, NpcTurnRuntime, NpcTurnRuntimeResult, MAX_MEMORY_NOTE_BYTES};
+pub use router::{
+    BuzzActionPort, GitHubActionPort, OrganizationActionPort, RoutedNpcActionExecutor,
+    VerificationActionPort,
+};
+pub use runtime::{
+    NpcRuntimeError, NpcTurnRuntime, NpcTurnRuntimeResult, MAX_MEMORY_NOTE_BYTES,
+};
