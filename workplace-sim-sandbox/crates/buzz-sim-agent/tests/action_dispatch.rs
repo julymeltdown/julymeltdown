@@ -112,7 +112,10 @@ async fn dispatches_actions_in_declared_order_and_binds_turn_identity() {
     let executor = FakeExecutor::successful();
     let observer = executor.clone();
     let mut dispatcher = NpcActionDispatcher::new(executor);
-    let validated = turn(vec![action("action-one", "첫 번째"), action("action-two", "두 번째")]);
+    let validated = turn(vec![
+        action("action-one", "첫 번째"),
+        action("action-two", "두 번째"),
+    ]);
 
     let result = dispatcher.dispatch(&validated).await.unwrap();
     let calls = observer.calls();
@@ -133,7 +136,10 @@ async fn replaying_the_same_turn_returns_cached_receipts_without_reexecution() {
     let executor = FakeExecutor::successful();
     let observer = executor.clone();
     let mut dispatcher = NpcActionDispatcher::new(executor);
-    let validated = turn(vec![action("action-one", "첫 번째"), action("action-two", "두 번째")]);
+    let validated = turn(vec![
+        action("action-one", "첫 번째"),
+        action("action-two", "두 번째"),
+    ]);
 
     let first = dispatcher.dispatch(&validated).await.unwrap();
     let second = dispatcher.dispatch(&validated).await.unwrap();

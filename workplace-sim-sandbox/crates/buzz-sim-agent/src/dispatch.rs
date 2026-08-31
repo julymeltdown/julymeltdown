@@ -159,10 +159,12 @@ impl NpcActionReceipt {
             external_reference,
             evidence_digest,
         };
-        receipt.validate().map_err(|reason| NpcActionExecutorError {
-            executor: "receipt".to_string(),
-            reason,
-        })?;
+        receipt
+            .validate()
+            .map_err(|reason| NpcActionExecutorError {
+                executor: "receipt".to_string(),
+                reason,
+            })?;
         Ok(receipt)
     }
 
@@ -178,9 +180,7 @@ impl NpcActionReceipt {
             .as_ref()
             .is_some_and(|value| !bounded_nonempty(value, MAX_EXTERNAL_REFERENCE_BYTES))
         {
-            return Err(
-                "external reference must be non-empty and at most 2048 bytes".to_string(),
-            );
+            return Err("external reference must be non-empty and at most 2048 bytes".to_string());
         }
         if self
             .evidence_digest
