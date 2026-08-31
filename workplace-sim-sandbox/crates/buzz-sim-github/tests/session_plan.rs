@@ -17,14 +17,8 @@ fn repository(repository_id: &str, destination_name: &str) -> SessionRepositoryS
             BASE_SHA,
         )
         .unwrap(),
-        DestinationRepository::new(
-            repository_id,
-            "acme-sim",
-            destination_name,
-            "main",
-            true,
-        )
-        .unwrap(),
+        DestinationRepository::new(repository_id, "acme-sim", destination_name, "main", true)
+            .unwrap(),
         None,
     )
 }

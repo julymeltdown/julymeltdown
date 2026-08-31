@@ -151,11 +151,7 @@ impl SessionProvisioningPlan {
             destinations.insert(repository_id, repository.destination);
             seeds.push(seed);
         }
-        seeds.sort_by(|left, right| {
-            left.source
-                .repository_id
-                .cmp(&right.source.repository_id)
-        });
+        seeds.sort_by(|left, right| left.source.repository_id.cmp(&right.source.repository_id));
 
         let mut actors = actor_directory.actors().cloned().collect::<Vec<_>>();
         actors.sort_by(|left, right| left.actor_id.cmp(&right.actor_id));
@@ -182,10 +178,7 @@ impl SessionProvisioningPlan {
             }
         }
         grants.sort_by(|left, right| {
-            (&left.repository_id, &left.actor_id).cmp(&(
-                &right.repository_id,
-                &right.actor_id,
-            ))
+            (&left.repository_id, &left.actor_id).cmp(&(&right.repository_id, &right.actor_id))
         });
 
         Ok(Self {

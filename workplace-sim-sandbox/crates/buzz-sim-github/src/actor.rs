@@ -150,9 +150,7 @@ impl ActorDirectory {
                 return Err(ProvisioningError::DuplicateActorId(actor.actor_id));
             }
             if !github_logins.insert(actor.github_login.clone()) {
-                return Err(ProvisioningError::DuplicateGitHubLogin(
-                    actor.github_login,
-                ));
+                return Err(ProvisioningError::DuplicateGitHubLogin(actor.github_login));
             }
             directory
                 .actor_id_by_login

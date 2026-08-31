@@ -188,6 +188,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "buzz-sim-github"
+version = "0.1.0"
+dependencies = [
+ "buzz-sim-protocol",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "url",
+ "uuid",
+]
+
+[[package]]
 name = "buzz-sim-protocol"
 version = "0.1.0"
 dependencies = [

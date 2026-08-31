@@ -33,20 +33,10 @@ fn resolves_actor_and_github_login_bidirectionally() {
 
 #[test]
 fn duplicate_canonical_logins_are_rejected() {
-    let first = ActorBinding::new(
-        "npc:minseo",
-        "Min-Seo",
-        ActorKind::Npc,
-        BTreeMap::new(),
-    )
-    .unwrap();
-    let second = ActorBinding::new(
-        "npc:yujin",
-        "min-seo",
-        ActorKind::Npc,
-        BTreeMap::new(),
-    )
-    .unwrap();
+    let first =
+        ActorBinding::new("npc:minseo", "Min-Seo", ActorKind::Npc, BTreeMap::new()).unwrap();
+    let second =
+        ActorBinding::new("npc:yujin", "min-seo", ActorKind::Npc, BTreeMap::new()).unwrap();
 
     assert_eq!(
         ActorDirectory::new([first, second]).unwrap_err(),

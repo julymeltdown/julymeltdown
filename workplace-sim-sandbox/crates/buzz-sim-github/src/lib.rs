@@ -126,9 +126,7 @@ pub(crate) fn validate_identifier(
 
 pub(crate) fn validate_full_git_object_id(value: &str) -> Result<(), ProvisioningError> {
     if (value.len() == 40 || value.len() == 64)
-        && value
-            .chars()
-            .all(|character| character.is_ascii_hexdigit())
+        && value.chars().all(|character| character.is_ascii_hexdigit())
     {
         Ok(())
     } else {

@@ -86,20 +86,12 @@ fn seed_plan_scopes_credentials_to_exact_repositories() {
 
 #[test]
 fn source_and_destination_must_not_be_the_same_repository() {
-    let destination = DestinationRepository::new(
-        "legacy-cart",
-        "acme",
-        "legacy-cart",
-        "main",
-        true,
-    )
-    .unwrap();
+    let destination =
+        DestinationRepository::new("legacy-cart", "acme", "legacy-cart", "main", true).unwrap();
 
     assert_eq!(
         SeedPlan::new(Uuid::nil(), source(), destination, None).unwrap_err(),
-        ProvisioningError::SourceEqualsDestination(
-            "github.com/acme/legacy-cart".to_string()
-        )
+        ProvisioningError::SourceEqualsDestination("github.com/acme/legacy-cart".to_string())
     );
 }
 

@@ -163,10 +163,7 @@ impl GitCredentialScope {
 
     /// Creates a scope for an exact destination repository.
     #[must_use]
-    pub fn for_destination(
-        destination: &DestinationRepository,
-        access: CredentialAccess,
-    ) -> Self {
+    pub fn for_destination(destination: &DestinationRepository, access: CredentialAccess) -> Self {
         Self {
             host: destination.host.to_ascii_lowercase(),
             owner: destination.owner.to_ascii_lowercase(),
