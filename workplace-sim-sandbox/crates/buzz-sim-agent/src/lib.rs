@@ -10,6 +10,7 @@ mod action;
 mod context;
 mod error;
 mod memory;
+mod model;
 mod orchestrator;
 mod persona;
 
@@ -21,6 +22,10 @@ pub use context::{
 };
 pub use error::AgentError;
 pub use memory::{MemoryAudience, MemoryLedger, MemoryRecord, MemoryRecordOutcome};
+pub use model::{
+    JsonNpcModel, NpcModelContract, NpcModelRequest, NpcModelTransport,
+    DEFAULT_MODEL_RESPONSE_BYTE_LIMIT, NPC_MODEL_PROTOCOL_VERSION,
+};
 pub use orchestrator::{
     NpcModel, NpcModelOutput, NpcOrchestrator, ValidatedNpcAction, ValidatedNpcTurn,
     MAX_ACTIONS_PER_TURN,
