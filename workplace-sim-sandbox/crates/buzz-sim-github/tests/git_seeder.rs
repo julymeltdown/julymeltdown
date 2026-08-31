@@ -204,7 +204,7 @@ fn credential_debug_output_never_contains_the_secret() {
 async fn tokio_executor_runs_a_real_git_process_without_credentials() {
     let directory = tempfile::tempdir().unwrap();
     let command = GitCommand::new(GitCommandPhase::Probe, ["--version"]);
-    let output = TokioGitCommandExecutor::default()
+    let output = TokioGitCommandExecutor
         .execute(directory.path(), &command, None)
         .await
         .unwrap();
