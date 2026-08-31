@@ -151,8 +151,14 @@ async fn git_cli_seeder_fetches_and_pushes_only_the_exact_commit() {
             GitCommandPhase::PushExactCommit,
         ]
     );
-    assert_eq!(calls[2].credential_username.as_deref(), Some("x-access-token"));
-    assert_eq!(calls[5].credential_username.as_deref(), Some("x-access-token"));
+    assert_eq!(
+        calls[2].credential_username.as_deref(),
+        Some("x-access-token")
+    );
+    assert_eq!(
+        calls[5].credential_username.as_deref(),
+        Some("x-access-token")
+    );
     assert!(calls[2].arguments.contains(&SOURCE_SHA.to_string()));
     assert!(calls[5]
         .arguments
@@ -160,9 +166,12 @@ async fn git_cli_seeder_fetches_and_pushes_only_the_exact_commit() {
     assert!(calls[5]
         .arguments
         .contains(&"--force-with-lease=refs/heads/main:".to_string()));
-    assert!(calls.iter().flat_map(|call| &call.arguments).all(|argument| {
-        !argument.contains("secret-source") && !argument.contains("secret-destination")
-    }));
+    assert!(calls
+        .iter()
+        .flat_map(|call| &call.arguments)
+        .all(|argument| {
+            !argument.contains("secret-source") && !argument.contains("secret-destination")
+        }));
 }
 
 #[tokio::test]

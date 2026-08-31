@@ -4,9 +4,7 @@ use async_trait::async_trait;
 use tempfile::{Builder, TempDir};
 use tokio::process::Command;
 
-use crate::{
-    GitCredentialScope, GitHubApiError, RepositorySeeder, SeedPlan, SeededRepository,
-};
+use crate::{GitCredentialScope, GitHubApiError, RepositorySeeder, SeedPlan, SeededRepository};
 
 /// Lifecycle phase of one concrete Git command used while seeding a session repository.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -205,10 +203,8 @@ fn create_askpass(working_directory: &Path) -> Result<tempfile::NamedTempFile, G
         .map_err(|error| GitHubApiError::Transport(error.to_string()))?;
 
     #[cfg(windows)]
-    file.write_all(
-        b"@echo off\r\necho %BUZZ_GIT_PASSWORD%\r\n",
-    )
-    .map_err(|error| GitHubApiError::Transport(error.to_string()))?;
+    file.write_all(b"@echo off\r\necho %BUZZ_GIT_PASSWORD%\r\n")
+        .map_err(|error| GitHubApiError::Transport(error.to_string()))?;
 
     #[cfg(not(windows))]
     {
@@ -271,7 +267,8 @@ where
     E: GitCommandExecutor,
 {
     async fn seed_repository(&self, plan: &SeedPlan) -> Result<SeededRepository, GitHubApiError> {
-        let workspace = TempDir::new().map_err(|error| GitHubApiError::Transport(error.to_string()))?;
+        let workspace =
+            TempDir::new().map_err(|error| GitHubApiError::Transport(error.to_string()))?;
 
         self.run(
             workspace.path(),
@@ -350,13 +347,18 @@ where
             None,
         )
         .await?;
-        let force_with_lease = format!("--force-with-lease={}:" , plan.target_ref);
+        let force_with_lease = format!("--force-with-lease={}:", plan.target_ref);
         let refspec = format!("{}:{}", plan.source.commit_sha, plan.target_ref);
         self.run(
             workspace.path(),
             GitCommand::new(
                 GitCommandPhase::PushExactCommit,
-                ["push", force_with_lease.as_str(), "destination", refspec.as_str()],
+                [
+                    "push",
+                    force_with_lease.as_str(),
+                    "destination",
+                    refspec.as_str(),
+                ],
             ),
             Some(&destination_credential),
         )
@@ -379,8 +381,6 @@ where
         command: GitCommand,
         credential: Option<&GitCredentialLease>,
     ) -> Result<GitCommandOutput, GitHubApiError> {
-        self.executor
-            .execute(directory, &command, credential)
-            .await
+        self.executor.execute(directory, &command, credential).await
     }
 }
