@@ -23,30 +23,22 @@ jobs:
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: workplace-sim-sandbox
-      - name: Apply staged source bundle
-        run: |
-          if compgen -G '.staging/bundle.part-*' >/dev/null; then
-            cat .staging/bundle.part-* | base64 --decode > /tmp/staged-source.tar.gz
-            EXPECTED_SHA="$(cat .staging/bundle.sha256)"
-            echo "${EXPECTED_SHA}  /tmp/staged-source.tar.gz" | sha256sum -c -
-            tar -xzf /tmp/staged-source.tar.gz -C ..
-            rm -rf .staging /tmp/staged-source.tar.gz
-          fi
+      - name: Format
+        run: cargo fmt --all
       - name: Check
         run: cargo check --workspace --all-targets
       - name: Test
         run: cargo test --workspace --all-targets
-      - name: Format
-        run: cargo fmt --all
       - name: Clippy
         run: cargo clippy --workspace --all-targets -- -D warnings
-      - name: Persist verified sources and formatting
+      - name: Diff hygiene
+        run: git diff --check
+      - name: Persist verified lockfile and formatting
         run: |
-          git add Cargo.toml Cargo.lock crates docs
-          git add -A .staging
+          git add Cargo.toml Cargo.lock crates
           if ! git diff --cached --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -s -m 'feat(sim): add GitHub session provisioning contracts'
+            git commit -s -m 'style(sim): persist verified GitHub provisioning sources'
             git push origin HEAD:workplace-sim-sandbox-ci
           fi

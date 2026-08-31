@@ -1,0 +1,17 @@
+[package]
+name = "buzz-sim-github"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Deterministic GitHub session provisioning contracts for the Buzz workplace simulator"
+
+[dependencies]
+buzz-sim-protocol = { workspace = true }
+serde = { workspace = true }
+thiserror = { workspace = true }
+url = { workspace = true }
+uuid = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
