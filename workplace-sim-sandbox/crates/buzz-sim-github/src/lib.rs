@@ -9,9 +9,7 @@ mod actor;
 mod seed;
 mod session;
 
-pub use actor::{
-    ActorBinding, ActorDirectory, ActorKind, RepositoryAccess, ResolvedActor,
-};
+pub use actor::{ActorBinding, ActorDirectory, ActorKind, RepositoryAccess, ResolvedActor};
 pub use seed::{
     CredentialAccess, DestinationRepository, GitCredentialScope, SeedOperation, SeedPlan,
     SourceRevision,
@@ -57,12 +55,14 @@ pub enum ProvisioningError {
     #[error("commit id must be a full 40-character SHA-1 or 64-character SHA-256 hex value")]
     InvalidCommitSha,
     /// A source and destination used different scenario-local repository identifiers.
-    #[error("repository id mismatch: source={source:?}, destination={destination:?}")]
+    #[error(
+        "repository id mismatch: source={source_repository_id:?}, destination={destination_repository_id:?}"
+    )]
     RepositoryIdMismatch {
         /// Source identifier.
-        source: String,
+        source_repository_id: String,
         /// Destination identifier.
-        destination: String,
+        destination_repository_id: String,
     },
     /// A seed plan attempted to write back into its source repository.
     #[error("source and destination resolve to the same repository {0}")]
@@ -126,7 +126,9 @@ pub(crate) fn validate_identifier(
 
 pub(crate) fn validate_full_git_object_id(value: &str) -> Result<(), ProvisioningError> {
     if (value.len() == 40 || value.len() == 64)
-        && value.chars().all(|character| character.is_ascii_hexdigit())
+        && value
+            .chars()
+            .all(|character| character.is_ascii_hexdigit())
     {
         Ok(())
     } else {

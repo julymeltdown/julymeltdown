@@ -123,10 +123,7 @@ impl DestinationRepository {
     /// Returns the uncredentialed HTTPS clone URL for this destination.
     #[must_use]
     pub fn clone_url(&self) -> String {
-        format!(
-            "https://{}/{}/{}.git",
-            self.host, self.owner, self.name
-        )
+        format!("https://{}/{}/{}.git", self.host, self.owner, self.name)
     }
 
     fn coordinate(&self) -> RepositoryCoordinate {
@@ -248,8 +245,8 @@ impl SeedPlan {
     ) -> Result<Self, ProvisioningError> {
         if source.repository_id != destination.repository_id {
             return Err(ProvisioningError::RepositoryIdMismatch {
-                source: source.repository_id,
-                destination: destination.repository_id,
+                source_repository_id: source.repository_id,
+                destination_repository_id: destination.repository_id,
             });
         }
 
