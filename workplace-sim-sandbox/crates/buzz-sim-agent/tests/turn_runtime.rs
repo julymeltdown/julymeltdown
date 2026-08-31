@@ -35,9 +35,13 @@ personas:
     knowledge: []
 "#;
 
+type ModelCalls = Arc<Mutex<Vec<NpcModelInput>>>;
+type ExecutorCalls = Arc<Mutex<Vec<NpcActionCommand>>>;
+type TestRuntime = NpcTurnRuntime<CountingModel, PrefixExecutor>;
+
 #[derive(Debug, Clone)]
 struct CountingModel {
-    calls: Arc<Mutex<Vec<NpcModelInput>>>,
+    calls: ModelCalls,
     output: NpcModelOutput,
 }
 
@@ -51,7 +55,7 @@ impl NpcModel for CountingModel {
 
 #[derive(Debug, Clone)]
 struct PrefixExecutor {
-    calls: Arc<Mutex<Vec<NpcActionCommand>>>,
+    calls: ExecutorCalls,
     fail_on_call: Option<usize>,
 }
 
@@ -109,11 +113,7 @@ fn runtime(
     workload: u8,
     output: NpcModelOutput,
     fail_on_call: Option<usize>,
-) -> (
-    NpcTurnRuntime<CountingModel, PrefixExecutor>,
-    Arc<Mutex<Vec<NpcModelInput>>>,
-    Arc<Mutex<Vec<NpcActionCommand>>>,
-) {
+) -> (TestRuntime, ModelCalls, ExecutorCalls) {
     let personas = PERSONAS.replace("workload: 10", &format!("workload: {workload}"));
     let directory = PersonaDirectory::new(PersonaPack::from_yaml(&personas).unwrap()).unwrap();
     let model_calls = Arc::new(Mutex::new(Vec::new()));
