@@ -46,6 +46,4 @@ pub use router::{
     BuzzActionPort, GitHubActionPort, OrganizationActionPort, RoutedNpcActionExecutor,
     VerificationActionPort,
 };
-pub use runtime::{
-    NpcRuntimeError, NpcTurnRuntime, NpcTurnRuntimeResult, MAX_MEMORY_NOTE_BYTES,
-};
+pub use runtime::{NpcRuntimeError, NpcTurnRuntime, NpcTurnRuntimeResult, MAX_MEMORY_NOTE_BYTES};

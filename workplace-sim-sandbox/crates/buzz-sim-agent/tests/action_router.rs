@@ -46,7 +46,9 @@ impl RecordingPort {
             .unwrap()
             .push(format!("{}:{}", self.category, command.action_id));
         if self.fail {
-            return Err(NpcActionExecutorError::new(self.category, "planned port failure").unwrap());
+            return Err(
+                NpcActionExecutorError::new(self.category, "planned port failure").unwrap(),
+            );
         }
         NpcActionReceipt::new(
             command.action_id.clone(),
@@ -111,7 +113,9 @@ fn command(index: u16, action: NpcActionDraft) -> NpcActionCommand {
     }
 }
 
-fn router(calls: Calls) -> RoutedNpcActionExecutor<RecordingPort, RecordingPort, RecordingPort, RecordingPort> {
+fn router(
+    calls: Calls,
+) -> RoutedNpcActionExecutor<RecordingPort, RecordingPort, RecordingPort, RecordingPort> {
     RoutedNpcActionExecutor::new(
         RecordingPort::new("buzz", calls.clone()),
         RecordingPort::new("github", calls.clone()),

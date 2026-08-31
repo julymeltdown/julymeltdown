@@ -111,14 +111,10 @@ where
                 self.github.execute_github_action(command).await
             }
             NpcActionDraft::RunVerification { .. } => {
-                self.verification
-                    .execute_verification_action(command)
-                    .await
+                self.verification.execute_verification_action(command).await
             }
             NpcActionDraft::Escalate { .. } | NpcActionDraft::ScheduleMeeting { .. } => {
-                self.organization
-                    .execute_organization_action(command)
-                    .await
+                self.organization.execute_organization_action(command).await
             }
         }
     }
