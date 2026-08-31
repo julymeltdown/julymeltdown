@@ -50,12 +50,7 @@ fn observed(
             .to_str()
             .unwrap()
             .to_string(),
-        accept: headers
-            .get("accept")
-            .unwrap()
-            .to_str()
-            .unwrap()
-            .to_string(),
+        accept: headers.get("accept").unwrap().to_str().unwrap().to_string(),
         api_version: headers
             .get("x-github-api-version")
             .unwrap()
@@ -127,9 +122,7 @@ async fn forbidden_create() -> (StatusCode, Json<Value>) {
 }
 
 async fn spawn_api(router: Router) -> (String, tokio::task::JoinHandle<()>) {
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:0")
-        .await
-        .unwrap();
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
     let address = listener.local_addr().unwrap();
     let task = tokio::spawn(async move {
         axum::serve(listener, router).await.unwrap();
@@ -170,10 +163,7 @@ async fn rest_client_uses_current_headers_and_expected_repository_endpoints() {
             "/repos/{owner}/{repository}/collaborators/{username}",
             put(grant_repository_access),
         )
-        .route(
-            "/repos/{owner}/{repository}",
-            delete(delete_repository),
-        )
+        .route("/repos/{owner}/{repository}", delete(delete_repository))
         .with_state(recorder.clone());
     let (base_url, server) = spawn_api(router).await;
     let client = GitHubRestClient::new(&base_url, "test-installation-token").unwrap();
@@ -206,10 +196,7 @@ async fn rest_client_uses_current_headers_and_expected_repository_endpoints() {
     );
     assert_eq!(requests[1].body, Some(json!({"permission": "push"})));
     assert_eq!(requests[2].method, "DELETE");
-    assert_eq!(
-        requests[2].path,
-        "/repos/acme-sim/session-legacy-cart"
-    );
+    assert_eq!(requests[2].path, "/repos/acme-sim/session-legacy-cart");
     for request in requests {
         assert_eq!(request.authorization, "Bearer test-installation-token");
         assert_eq!(request.accept, "application/vnd.github+json");
@@ -219,10 +206,8 @@ async fn rest_client_uses_current_headers_and_expected_repository_endpoints() {
 
 #[tokio::test]
 async fn rest_client_preserves_status_and_bounded_error_body() {
-    let (base_url, server) = spawn_api(
-        Router::new().route("/orgs/{owner}/repos", post(forbidden_create)),
-    )
-    .await;
+    let (base_url, server) =
+        spawn_api(Router::new().route("/orgs/{owner}/repos", post(forbidden_create))).await;
     let client = GitHubRestClient::new(&base_url, "test-installation-token").unwrap();
 
     let error = client.create_repository(&destination()).await.unwrap_err();

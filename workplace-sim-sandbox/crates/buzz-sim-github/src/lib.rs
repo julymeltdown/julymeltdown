@@ -17,9 +17,8 @@ pub use api::{
     GITHUB_API_VERSION,
 };
 pub use provisioner::{
-    GitHubSessionProvisioner, ProvisionedRepository, ProvisionedSession,
-    ProvisioningFailurePhase, RepositorySeeder, RollbackFailure, SeededRepository,
-    SessionProvisioningFailure,
+    GitHubSessionProvisioner, ProvisionedRepository, ProvisionedSession, ProvisioningFailurePhase,
+    RepositorySeeder, RollbackFailure, SeededRepository, SessionProvisioningFailure,
 };
 pub use seed::{
     CredentialAccess, DestinationRepository, GitCredentialScope, SeedOperation, SeedPlan,
@@ -137,9 +136,7 @@ pub(crate) fn validate_identifier(
 
 pub(crate) fn validate_full_git_object_id(value: &str) -> Result<(), ProvisioningError> {
     if (value.len() == 40 || value.len() == 64)
-        && value
-            .chars()
-            .all(|character| character.is_ascii_hexdigit())
+        && value.chars().all(|character| character.is_ascii_hexdigit())
     {
         Ok(())
     } else {

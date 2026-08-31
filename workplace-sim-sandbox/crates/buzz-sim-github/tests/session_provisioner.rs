@@ -94,10 +94,7 @@ struct FakeSeeder {
 
 #[async_trait]
 impl RepositorySeeder for FakeSeeder {
-    async fn seed_repository(
-        &self,
-        plan: &SeedPlan,
-    ) -> Result<SeededRepository, GitHubApiError> {
+    async fn seed_repository(&self, plan: &SeedPlan) -> Result<SeededRepository, GitHubApiError> {
         self.calls.push(format!(
             "seed:{}:{}",
             plan.source.repository_id, plan.source.commit_sha
@@ -137,11 +134,7 @@ fn repository(repository_id: &str) -> SessionRepositorySpec {
     )
 }
 
-fn actor(
-    actor_id: &str,
-    login: &str,
-    entries: &[(&str, RepositoryAccess)],
-) -> ActorBinding {
+fn actor(actor_id: &str, login: &str, entries: &[(&str, RepositoryAccess)]) -> ActorBinding {
     ActorBinding::new(
         actor_id,
         login,

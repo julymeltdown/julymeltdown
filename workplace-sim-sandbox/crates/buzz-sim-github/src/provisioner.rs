@@ -24,10 +24,7 @@ pub struct SeededRepository {
 #[async_trait]
 pub trait RepositorySeeder: Send + Sync {
     /// Executes the shell-neutral operations from one validated seed plan.
-    async fn seed_repository(
-        &self,
-        plan: &SeedPlan,
-    ) -> Result<SeededRepository, GitHubApiError>;
+    async fn seed_repository(&self, plan: &SeedPlan) -> Result<SeededRepository, GitHubApiError>;
 }
 
 /// One repository successfully created and seeded for a simulation session.
