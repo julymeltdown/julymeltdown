@@ -4,13 +4,12 @@ use buzz_sim_agent::{
     CharacterPresentation, NpcAvailability, NpcCapability, PersonaDirectory, PersonaPack,
 };
 
-const SEASON_ONE_PERSONAS: &str =
-    include_str!("../../../personas/momo-commerce-season-1.yaml");
+const SEASON_ONE_PERSONAS: &str = include_str!("../../../personas/momo-commerce-season-1.yaml");
 
 #[test]
 fn season_one_pack_loads_eight_distinct_women_with_work_authority() {
-    let directory = PersonaDirectory::new(PersonaPack::from_yaml(SEASON_ONE_PERSONAS).unwrap())
-        .unwrap();
+    let directory =
+        PersonaDirectory::new(PersonaPack::from_yaml(SEASON_ONE_PERSONAS).unwrap()).unwrap();
 
     assert_eq!(directory.len(), 8);
     let ids = directory
@@ -35,8 +34,8 @@ fn season_one_pack_loads_eight_distinct_women_with_work_authority() {
 
 #[test]
 fn season_one_roles_cover_cross_functional_company_work() {
-    let directory = PersonaDirectory::new(PersonaPack::from_yaml(SEASON_ONE_PERSONAS).unwrap())
-        .unwrap();
+    let directory =
+        PersonaDirectory::new(PersonaPack::from_yaml(SEASON_ONE_PERSONAS).unwrap()).unwrap();
     let roles = directory
         .personas()
         .map(|persona| persona.role.as_str())
