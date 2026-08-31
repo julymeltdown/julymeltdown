@@ -1,15 +1,26 @@
 #![deny(unsafe_code)]
-//! Deterministic contracts for provisioning isolated GitHub repositories per simulation session.
+//! Deterministic contracts and transports for provisioning isolated GitHub repositories per
+//! simulation session.
 //!
-//! This crate intentionally contains no GitHub token and performs no network calls. It validates
-//! exact source revisions, compiles least-privilege actor grants, and produces stable seed plans
-//! that a GitHub App adapter can execute.
+//! Exact source revisions, actor grants, REST operations, and the Git seeding boundary are kept
+//! separate so the simulation kernel can reason about facts without holding credentials.
 
 mod actor;
+mod api;
+mod provisioner;
 mod seed;
 mod session;
 
 pub use actor::{ActorBinding, ActorDirectory, ActorKind, RepositoryAccess, ResolvedActor};
+pub use api::{
+    CreatedRepository, GitHubApiError, GitHubRepositoryApi, GitHubRestClient, GrantOutcome,
+    GITHUB_API_VERSION,
+};
+pub use provisioner::{
+    GitHubSessionProvisioner, ProvisionedRepository, ProvisionedSession,
+    ProvisioningFailurePhase, RepositorySeeder, RollbackFailure, SeededRepository,
+    SessionProvisioningFailure,
+};
 pub use seed::{
     CredentialAccess, DestinationRepository, GitCredentialScope, SeedOperation, SeedPlan,
     SourceRevision,
@@ -126,7 +137,9 @@ pub(crate) fn validate_identifier(
 
 pub(crate) fn validate_full_git_object_id(value: &str) -> Result<(), ProvisioningError> {
     if (value.len() == 40 || value.len() == 64)
-        && value.chars().all(|character| character.is_ascii_hexdigit())
+        && value
+            .chars()
+            .all(|character| character.is_ascii_hexdigit())
     {
         Ok(())
     } else {
