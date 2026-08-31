@@ -1,9 +1,7 @@
 use async_trait::async_trait;
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    AgentError, NpcModel, NpcModelInput, NpcModelOutput, MAX_ACTIONS_PER_TURN,
-};
+use crate::{AgentError, NpcModel, NpcModelInput, NpcModelOutput, MAX_ACTIONS_PER_TURN};
 
 /// Current protocol version used between the NPC orchestrator and a structured model gateway.
 pub const NPC_MODEL_PROTOCOL_VERSION: u16 = 1;

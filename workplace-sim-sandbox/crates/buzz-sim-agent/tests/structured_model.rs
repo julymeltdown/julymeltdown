@@ -95,8 +95,14 @@ async fn structured_model_forwards_exact_context_and_parses_strict_json() {
     assert_eq!(output.reply.unwrap().fact_ids.len(), 1);
     let request = &requests.lock().unwrap()[0];
     assert_eq!(request.version, NPC_MODEL_PROTOCOL_VERSION);
-    assert_eq!(request.input.request.player_input, input.request.player_input);
-    assert_eq!(request.input.persona.private_traits, input.persona.private_traits);
+    assert_eq!(
+        request.input.request.player_input,
+        input.request.player_input
+    );
+    assert_eq!(
+        request.input.persona.private_traits,
+        input.persona.private_traits
+    );
     assert_eq!(request.contract.maximum_actions, MAX_ACTIONS_PER_TURN);
     assert!(request.contract.strict_json_only);
     assert!(request
@@ -146,5 +152,7 @@ async fn oversized_model_output_is_rejected_before_parsing() {
 
     let error = model.generate(&input()).await.unwrap_err();
 
-    assert!(matches!(error, AgentError::Model(message) if message.contains("1025") && message.contains("1024")));
+    assert!(
+        matches!(error, AgentError::Model(message) if message.contains("1025") && message.contains("1024"))
+    );
 }
