@@ -7,6 +7,7 @@
 
 mod actor;
 mod api;
+mod git;
 mod provisioner;
 mod seed;
 mod session;
@@ -15,6 +16,10 @@ pub use actor::{ActorBinding, ActorDirectory, ActorKind, RepositoryAccess, Resol
 pub use api::{
     CreatedRepository, GitHubApiError, GitHubRepositoryApi, GitHubRestClient, GrantOutcome,
     GITHUB_API_VERSION,
+};
+pub use git::{
+    GitCliSeeder, GitCommand, GitCommandExecutor, GitCommandOutput, GitCommandPhase,
+    GitCredentialLease, GitCredentialProvider, TokioGitCommandExecutor,
 };
 pub use provisioner::{
     GitHubSessionProvisioner, ProvisionedRepository, ProvisionedSession, ProvisioningFailurePhase,
