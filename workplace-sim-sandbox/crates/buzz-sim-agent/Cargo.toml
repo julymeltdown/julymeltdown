@@ -1,0 +1,20 @@
+[package]
+name = "buzz-sim-agent"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Persona, knowledge, memory, and LLM orchestration contracts for the Buzz workplace simulator"
+
+[dependencies]
+async-trait = { workspace = true }
+buzz-sim-github = { workspace = true }
+buzz-sim-protocol = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+serde_yaml = { workspace = true }
+thiserror = { workspace = true }
+uuid = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true }
