@@ -25,27 +25,28 @@ jobs:
           workspaces: workplace-sim-sandbox
       - name: Apply staged source bundle
         run: |
-          if compgen -G '.staging/task3.part-*' >/dev/null; then
-            cat .staging/task3.part-* | base64 --decode > /tmp/task3.tar.gz
-            echo '2c4154e33d74f29b37b28abbe03291d68852c18c1885bb0a78edaadd8b38db59  /tmp/task3.tar.gz' | sha256sum -c -
-            tar -xzf /tmp/task3.tar.gz
-            rm -rf .staging /tmp/task3.tar.gz
+          if compgen -G '.staging/bundle.part-*' >/dev/null; then
+            cat .staging/bundle.part-* | base64 --decode > /tmp/staged-source.tar.gz
+            EXPECTED_SHA="$(cat .staging/bundle.sha256)"
+            echo "${EXPECTED_SHA}  /tmp/staged-source.tar.gz" | sha256sum -c -
+            tar -xzf /tmp/staged-source.tar.gz -C ..
+            rm -rf .staging /tmp/staged-source.tar.gz
           fi
-      - name: Format
-        run: cargo fmt --all
       - name: Check
         run: cargo check --workspace --all-targets
       - name: Test
         run: cargo test --workspace --all-targets
+      - name: Format
+        run: cargo fmt --all
       - name: Clippy
         run: cargo clippy --workspace --all-targets -- -D warnings
       - name: Persist verified sources and formatting
         run: |
-          git add Cargo.toml Cargo.lock crates
+          git add Cargo.toml Cargo.lock crates docs
           git add -A .staging
           if ! git diff --cached --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -s -m 'feat(sim): add validated scenario manifest'
+            git commit -s -m 'feat(sim): add GitHub session provisioning contracts'
             git push origin HEAD:workplace-sim-sandbox-ci
           fi
